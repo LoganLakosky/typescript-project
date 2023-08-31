@@ -1,22 +1,19 @@
-function isPalindrome(string1: string) {
-  const str = string1;
+function twoSum(nums: number[], target: number) {
+  const tmp: number[] = [];
+  for (let i = 1; i < nums.length; i++) {
+    for (let j = 0; j < nums.length; j++) {
+      if (nums[j] + nums[i] === target) {
+        if (j === i) {
+          break;
+        }
 
-  const tmpArr1: string[] = [...str];
-
-  const tmpArr2: string[] = [];
-  tmpArr2.push(...tmpArr1);
-
-  const backSortedArr = tmpArr1.reverse();
-
-  for (let j = 0; j < str.length; j++) {
-    if (backSortedArr[j] !== tmpArr2[j]) {
-      return false;
+        tmp.push(j, i);
+        return tmp;
+      }
     }
   }
-
-  return true;
+  return [];
 }
 
-const a = isPalindrome("pop");
-
+let a = twoSum([2, 5, 5, 11], 10);
 console.log(a);
