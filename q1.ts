@@ -1,19 +1,25 @@
-function twoSum(nums: number[], target: number) {
-  const tmp: number[] = [];
-  for (let i = 1; i < nums.length; i++) {
-    for (let j = 0; j < nums.length; j++) {
-      if (nums[j] + nums[i] === target) {
-        if (j === i) {
-          break;
-        }
+const d = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
 
-        tmp.push(j, i);
-        return tmp;
-      }
+function binarySearch(array: number[], target: number) {
+  let low = 0;
+
+  let high = array.length - 1;
+
+  while (low <= high) {
+    let middle = low + (high - low) / 2;
+
+    let value = array[middle];
+
+    if (value < target) {
+      low = middle + 1;
+    } else if (value > target) {
+      high = middle - 1;
+    } else {
+      return middle;
     }
   }
-  return [];
+
+  return -1;
 }
 
-let a = twoSum([2, 5, 5, 11], 10);
-console.log(a);
+console.log(binarySearch(d, 7));
