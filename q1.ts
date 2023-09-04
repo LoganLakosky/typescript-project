@@ -1,25 +1,45 @@
-const d = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
+const url = "?foo=hello&bar=world&baz";
 
-function binarySearch(array: number[], target: number) {
-  let low = 0;
+type FormatObjProps = {
+  foo: string | undefined;
+  bar: string | undefined;
+  baz: string | undefined | boolean;
+};
 
-  let high = array.length - 1;
-
-  while (low <= high) {
-    let middle = low + (high - low) / 2;
-
-    let value = array[middle];
-
-    if (value < target) {
-      low = middle + 1;
-    } else if (value > target) {
-      high = middle - 1;
-    } else {
-      return middle;
-    }
+function formatQStr(url: string): FormatObjProps {
+  if (url.length < 4) {
+    return { foo: undefined, bar: undefined, baz: true };
   }
 
-  return -1;
+  const b = url.split("=");
+
+  if (b[3] === "") {
+    return { foo: undefined, bar: undefined, baz: true };
+  }
+
+  const c = b[1].split("&");
+  const barTmp = b[2].split("&");
+
+  const bar = barTmp[0];
+  const foo = c[0];
+  const baz = b[3];
+
+  if (barTmp[1] === "baz") {
+    const bazTmp = b[3];
+    if (bazTmp === undefined) {
+      return { foo: foo, bar: bar, baz: true };
+    }
+
+    return { foo: foo, bar: bar, baz: bazTmp };
+  }
+
+  const output = {
+    foo: foo,
+    bar: bar,
+    baz: baz,
+  };
+
+  return output;
 }
 
-console.log(binarySearch(d, 7));
+const a = formatQStr(url);
